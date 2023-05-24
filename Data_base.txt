@@ -1,0 +1,373 @@
+*primary key:
+-unique
+-not null
+-foreign key in another table
+-compatble--ex-->prevent you add an employee to not exist department id 
+--------------------------------------------------------------------------
+*SELECT:
+-projection:choose columns from table to show
+-selection:choose rows from table to show,retrieve data not updating
+-Syntax:
+=SELECT * FROM DEPARTMENT:choose all rows from department
+=SELECT EMPLOYEE_ID,FIRST_NAME FROM HR.EMPLOYEES;
+ choose 2 columns from the table
+=SELECT SALARY,SALARY+300 FROM HR.EMPLOYEES;
+ show salary then show salary+300
+=SELECT SALARY,(SALARY+100)*12 FROM HR.EMPLOYEES;
+=to convert SQL data to excel:vedio(6)https://youtu.be/-SR_5Qv57dI
+  1-press right click on data
+  2-export data
+  3-from format choose xml 
+------------------------------------------------------------------------
+*NULL VALUE:
+-not = 0 or ' '.
+-null(+,*,-,/,%..)any value=null
+-Syntax:
+=SELECT commission_pct FROM HR.EMPLOYEES;
+------------------------------------------------------------------------
+*Change column name:
+=SELECT last_name AS lastname FROM HR.EMPLOYEES;show column name as LASTNAME without
+ changing its real name in data base.
+=SELECT last_name AS "lastname" FROM HR.EMPLOYEES;show column name as lastname without
+ changing its real name in data base.
+-----------------------------------------------------------------------
+*Concatination operator:
+=SELECT last_name||EMPLOYEE_ID FROM HR.EMPLOYEES;
+ cocatnate value of values of columns,ex:aya   1-->aya1
+=SELECT last_name||' is a '||EMPLOYEE_ID FROM HR.EMPLOYEES;aya is a 1
+=SELECT last_name||' is a job's '||EMPLOYEE_ID FROM HR.EMPLOYEES;
+ orcale can't understand it because of ' in job's
+=SELECT last_name||q'[ is a job's ]'||EMPLOYEE_ID FROM HR.EMPLOYEES;
+ correct statement
+=SELECT last_name||q' [ is a job's ] '||EMPLOYEE_ID FROM HR.EMPLOYEES;
+ Wrong statement
+-------------------------------------------------------------------------
+*DISTINCT:
+=SELECT DISTINCT first_name FROM HR.EMPLOYEES;
+ Show name only one time
+--------------------------------------------------------------------------
+*DESCRIBE
+-describe columns,feilds and values it should take,ex:
+ Name           Null     Type         
+ -------------- -------- ------------ 
+ EMPLOYEE_ID    NOT NULL NUMBER(6)    
+ FIRST_NAME              VARCHAR2(20) 
+ LAST_NAME      NOT NULL VARCHAR2(25)
+-----------------------------------------------------------------------
+*Restricting and sorting data:
+-dates,chars,and names should be written between single quotes.
+=SELECT department_id,FIRST_NAME,SALARY FROM HR.EMPLOYEES 
+ WHERE DEPARTMENT_ID=80;
+ حددت الداتا
+=SELECT department_id,FIRST_NAME,SALARY FROM HR.EMPLOYEES WHERE SALARY>=3000;
+=SELECT department_id,FIRST_NAME,SALARY FROM HR.EMPLOYEES WHERE SALARY<3000;
+=SELECT department_id,FIRST_NAME,SALARY FROM HR.EMPLOYEES 
+ WHERE DEPARTMENT_ID=1000;
+ correct but with no data.
+=SELECT SALARY FROM HR.EMPLOYEES WHERE LAST_NAME='Abel';
+ value betwwen quotes should be exactly written like this in the table.
+=SELECT SALARY FROM HR.EMPLOYEES WHERE HIRE_DATE='17-AUG-10';
+=SELECT department_id,FIRST_NAME,SALARY FROM HR.EMPLOYEES WHERE SALARY!=3000;
+ Not equal.
+=SELECT department_id,FIRST_NAME,SALARY FROM HR.EMPLOYEES WHERE SALARY^=3000;
+ Not equal.
+=SELECT department_id,FIRST_NAME,SALARY FROM HR.EMPLOYEES WHERE SALARY<>3000;
+ Not equal.
+=SELECT department_id,FIRST_NAME,SALARY FROM HR.EMPLOYEES WHERE SALARY BETWEEN 1000 AND 3000;
+ [1000:3000]
+=SELECT department_id,FIRST_NAME,SALARY FROM HR.EMPLOYEES WHERE SALARY IN (2900,3000,4000);
+ Show only salary equal to 2900,3000,or 4000.
+=SELECT department_id,FIRST_NAME,SALARY FROM HR.EMPLOYEES WHERE FIRST_NAME like 'K%';
+ Show any name start with K.
+ % means any number of chars after k,possibly 0.
+=SELECT department_id,FIRST_NAME,SALARY FROM HR.EMPLOYEES WHERE FIRST_NAME like '%v%';
+ show any name has v in middle,ex:David,Steven,Oliver.
+=SELECT department_id,FIRST_NAME,SALARY FROM HR.EMPLOYEES WHERE FIRST_NAME like '_o%';
+ any name has char then o then any number of chars.
+=SELECT department_id,FIRST_NAME,SALARY FROM HR.EMPLOYEES WHERE FIRST_NAME like '__s%';
+ any number has 2 chars then s then any number of chars.
+=SELECT department_id,FIRST_NAME,JOB_ID FROM HR.EMPLOYEES WHERE JOB_ID like 'ST\_%' ESCAPE '\';
+ to show a name contain _
+ we can use any char instead of \ ,ex:5 ,/
+=SELECT department_id,FIRST_NAME,JOB_ID FROM HR.EMPLOYEES WHERE MANAGER_ID IS NULL;
+ Null value take is
+=SELECT department_id,FIRST_NAME,JOB_ID FROM HR.EMPLOYEES 
+ WHERE SALARY >= 1000 AND JOB_ID LIKE '%MAN%';
+ Two conditions should be true
+=SELECT department_id,FIRST_NAME,JOB_ID FROM HR.EMPLOYEES 
+ WHERE SALARY >= 1000 OR JOB_ID LIKE '%MAN%';
+ One condition should be true.
+=SELECT department_id,FIRST_NAME,JOB_ID,SALARY FROM HR.EMPLOYEES 
+ WHERE SALARY not IN (1000,3000);
+ Show any employee has salary not equal 1000 and 3000.
+=SELECT department_id,FIRST_NAME,JOB_ID,SALARY FROM HR.EMPLOYEES 
+ WHERE JOB_ID ='SA_RE'OR JOB_ID='AD_PRES' AND SALARY > 13000;
+ AND then other logical operations
+ Show any employee has job_id=AD_PRES and salary > 13000 or
+ Show any employee has job_id=SA_RE.
+=SELECT department_id,FIRST_NAME,JOB_ID,SALARY FROM HR.EMPLOYEES 
+ WHERE (JOB_ID ='SA_RE'OR JOB_ID='AD_PRES') AND SALARY > 13000;
+ () then and
+ show any employee with job_id=SA_RE and salary>13000
+ show any employee with job_id=AD_PRES and salary>1300
+------------------------------------------------------------------------------
+*Order by
+-at the end of the statement
+-sort ascending (asc) (from smallest) by default
+-null is the biggest value
+-date sort from the oldest
+-syntax:
+=SELECT department_id,FIRST_NAME,JOB_ID,SALARY FROM HR.EMPLOYEES 
+ WHERE SALARY > 13000 ORDER BY FIRST_NAME;
+ Show data sorted by the first name
+ Employee data of smallest first name first
+ Employee data of smallest first name last
+ Null will be at the end
+=SELECT department_id,FIRST_NAME,JOB_ID,SALARY FROM HR.EMPLOYEES 
+ WHERE SALARY > 13000 ORDER BY FIRST_NAME desc;
+ Sort from biggest to smallest
+ Null will be at the begin
+=SELECT department_id,FIRST_NAME,JOB_ID,SALARY FROM HR.EMPLOYEES 
+ WHERE SALARY > 13000 ORDER BY 2;
+ Sort by second column you will show
+=SELECT department_id,FIRST_NAME,JOB_ID,SALARY FROM HR.EMPLOYEES 
+ WHERE SALARY > 13000 ORDER BY 1 ;
+=SELECT department_id,FIRST_NAME,JOB_ID,SALARY FROM HR.EMPLOYEES 
+ WHERE SALARY > 1000 ORDER BY 1 desc NULLS LAST;
+ Sort desc but nulls go to the end of the column
+=SELECT department_id,FIRST_NAME,JOB_ID,SALARY FROM HR.EMPLOYEES 
+ WHERE SALARY > 1000 ORDER BY EMPLOYEE_ID;
+ We can sort by column we won't show
+=SELECT department_id,FIRST_NAME,JOB_ID,SALARY FROM HR.EMPLOYEES 
+ WHERE SALARY > 1000 ORDER BY DEPARTMENT_ID,FIRST_NAME;
+ We can order by more than one column
+--------------------------------------------------------------------------
+*Substitution variables:
+-take variables from user
+-we can use substitution variable any where in select statement
+-Syntax:
+=SELECT employee_id,LAST_NAME,SALARY,DEPARTMENT_ID FROM HR.EMPLOYEES 
+ WHERE EMPLOYEE_ID=&emp_id;
+ Take emplyee id from user
+ Number
+=SELECT employee_id,LAST_NAME,SALARY,DEPARTMENT_ID FROM HR.EMPLOYEES 
+ WHERE LAST_NAME=&last_name;
+ The user should but the name between ' '
+ Or a error occurs
+=SELECT employee_id,LAST_NAME,SALARY,DEPARTMENT_ID FROM HR.EMPLOYEES 
+ WHERE LAST_NAME='&last_name';
+ The user should not but the name between ' '
+=SELECT &col1,&col2,SALARY,DEPARTMENT_ID FROM &table WHERE &cond ORDER BY &COL;
+ We can use substitution variable any where in select statement
+=SELECT &col1,&col1,SALARY,DEPARTMENT_ID FROM &table WHERE &cond ORDER BY &COL1;
+ Take col1 3 times
+=SELECT EMPLOYEE_ID,FIRST_NAME,&&COL1 FROM HR.EMPLOYEES 
+ WHERE &COL1 > 3000 ORDER BY &COL1;
+ Take value of col1 once for all runs and save it for every use
+ any place in your data called col1 will be equal to
+ the value you insert.
+=SELECT EMPLOYEE_ID,FIRST_NAME,&&COL1 FROM HR.EMPLOYEES 
+ WHERE &COL1 > 3000 ORDER BY &COL1 undefine COL1;
+ Take value of col1 one time for evrey run
+ Run as a script 'f5'
+=define COL2=SALARY;
+ SELECT EMPLOYEE_ID,FIRST_NAME,&COL2 FROM HR.EMPLOYEES 
+ WHERE &COL2 > 3000 ORDER BY &COL2;
+ Save col2 value as salary
+ don't take it from user
+---------------------------------------------------------------------------
+*Row function:
+-single:return one result per row
+-multiple:return one result per set of rows
+-case conversion:lower,upper,initcap
+-Syntax:
+-char:
+=SELECT LOWER(LAST_NAME) FROM HR.EMPLOYEES;
+ All chars are small
+=SELECT UPPER(LAST_NAME) FROM HR.EMPLOYEES;
+ All chars are capital
+=SELECT * FROM HR.EMPLOYEES WHERE UPPER(LAST_NAME)=UPPER('&NAME');
+ Enable user to input data in any form yes,Yes,yEs,..
+=SELECT FIRST_NAME,LAST_NAME,CONCAT(first_name,LAST_NAME) FROM HR.EMPLOYEES;
+ Only 2 columns
+=SELECT FIRST_NAME||LAST_NAME FROM HR.EMPLOYEES;
+ more than 1 column
+=SELECT FIRST_NAME,LAST_NAME,substr(LAST_NAME,1,2) FROM HR.EMPLOYEES;
+ substr from pos 1 to 3
+ substr from 0 = substr from 0
+=SELECT FIRST_NAME,LAST_NAME,substr(LAST_NAME,1) FROM HR.EMPLOYEES;
+ substr from 1 to the end
+=SELECT FIRST_NAME,LAST_NAME,substr(LAST_NAME,-3) FROM HR.EMPLOYEES;
+ Abel--->bel
+ count 3 from end the substr
+=SELECT FIRST_NAME,LAST_NAME,substr(LAST_NAME,3,-2) FROM HR.EMPLOYEES;
+ output=null
+=SELECT FIRST_NAME,LAST_NAME,length(first_name) FROM HR.EMPLOYEES;
+ Show length
+=SELECT FIRST_NAME,LAST_NAME,instr(first_name,'e') FROM HR.EMPLOYEES;
+ Show position of the char
+=SELECT FIRST_NAME,LAST_NAME,instr(first_name,'e',2) FROM HR.EMPLOYEES;
+ Show second apperance of the char
+=SELECT FIRST_NAME,salary,lpad(salary,10,'*'),rpad(salary,10,'*') 
+ FROM HR.EMPLOYEES;
+ Steven	24000	*****24000	24000*****
+=SELECT FIRST_NAME,replace(first_name,'l','a') FROM HR.EMPLOYEES;
+ Ellen--->Eaaen
+=SELECT FIRST_NAME,trim('A' from first_name) FROM HR.EMPLOYEES;
+ Amit--->mit
+ Remove char if found in start or end AmitA--->mit
+=select trim('a' from 'aaaaorcaleaaaa') from SYS.DUAL;
+ orcale
+=select trim(leading 'a' from 'aaaaorcaleaaaa') from SYS.DUAL;
+ aaaaorcale
+=select trim(trailing 'a' from 'aaaaorcaleaaaa') from SYS.DUAL;
+ orcaleaaaa
+=select trim(both 'a' from 'aaaaorcaleaaaa') from SYS.DUAL;
+ default 
+ orcale
+-number:
+-round:بتقرب
+-trunc:remove fraction
+=select round(65.652) from SYS.DUAL; //66
+=select round(65.252) from SYS.DUAL; //65
+=select round(65.652,0) from SYS.DUAL;//66
+=select round(65.652,1) from SYS.DUAL;//65.7
+=select round(65.652,2) from SYS.DUAL;//65.65
+=select round(65.652,-1) from SYS.DUAL;//70
+=select round(62.652,-1) from SYS.DUAL;//60
+=select round(62.652,-2) from SYS.DUAL;//100
+=select round(10.652,-2) from SYS.DUAL;//0
+=select round(650.652,-2) from SYS.DUAL;//700
+=select round(643.652,-2) from SYS.DUAL;//600
+=select trunc(650.652,0) from SYS.DUAL;//650
+=select trunc(650.652,-2) from SYS.DUAL;//600
+=select trunc(650.652,-3) from SYS.DUAL;//0
+=select mod(4,3) from SYS.DUAL;//1
+-------------------------------------
+-Dates:
+-You can perform arthmatic operations on date as it saved as numbers only(+,-) 
+-the result will be in days (date+date=result days)
+-YY-->in the same century 95-->2095
+-RR:
+ =0:49-->next century
+ =50:99->the same century
+ =if we are in 19 century
+ =59-->1959
+ =17-->2017
+ =But if we are in 2000th
+ =17-->2017
+ =59-->2095
+-Syntax:
+=select sysdate from sys.dual;
+ show the current date of the server you work on
+ if you work on a server on USA it show the date in USA
+ even if you are in egypt
+=select current_date from sys.dual;
+ show the current date of the device you work on
+ if you work on a device in Egypt it show the date in Egypt
+ even if work on a server in USA
+=select first_name,sysdate,hire_date,
+ round((sysdate-HIRE_DATE)/365) from hr.employees;
+ Show how many years has the employee worked
+=select first_name,sysdate,hire_date,
+ MONTHS_BETWEEN(sysdate,HIRE_DATE)/12 from hr.employees;
+ Show how many years has the employee worked
+ More accurate
+=select first_name,sysdate,hire_date,add_months(hire_date, 1) 
+ from hr.employees;
+ 7-MAR-03---->7-APR-03
+=select first_name,sysdate,hire_date,
+ next_day(hire_date,'friday') from hr.employees;
+ nearest friday to the hire date
+=select first_name,sysdate,hire_date,last_day(hire_date) from hr.employees;
+ last day of the month of the hire date was..
+ if the hire date=17-jun-87
+ it show 30-jun-87
+=select first_name,sysdate,hire_date,round(HIRE_DATE,'month') 
+ from hr.employees;
+ 15-mar-03-->1-apr-2003
+ 17-mar-03-->1-apr-2003
+ 07-mar-03-->1-mar-2003
+=select first_name,sysdate,hire_date,round(HIRE_DATE,'year') 
+ from hr.employees;
+ JAN:JUN-->1-JAN-the same year
+ else 1-JAN-the next year
+=select first_name,sysdate,hire_date,round(HIRE_DATE,'month') from hr.employees;
+ 1-jan-the same year
+=select first_name,sysdate,hire_date,round(HIRE_DATE,'year') from hr.employees;
+ 1-jan-the same year
+-----------------------
+-conversion between data types:
+-implicit-->orcale do it
+ =select first_name from hr.employees where employee_id='200';
+  convert '200' to 200 by default
+-explicit-->you do it by functions
+ ->from date to char = to_char
+ ->from number to char = to_char
+ ->from char to date = to_date
+ ->from char to number = to_number
+-Syntax:
+=select hire_date,to_char(hire_date,'dd/mm/yyyy') from hr.employees;
+ 17-JUN-87	17/06/1987
+ 'dd/mm/yyyy' you can change this forn as you like
+ 'dd/month/yyyy' 17/June/1987
+ بتتحكم في شكل التاريخ زي ما انت عايز
+ DAY-->FRIDAY
+ day-->friday
+ 'fm dd/mm/yyyy' بتظبط المسافات و الشكل عموما
+=select first_name,salary,to_char(salary,'$99,999,00') from hr.employees;
+=select to_number('0123456789','99999999999999') from sys.dual;
+ 123456789
+=select first_name from hr.employees where hire_date > to_date('1/1/1990','dd/mm/yy');
+ format should be the same as input char 1/1/1990
+=select last_name , upper(concat(substr(LAST_NAME,1,2),'_us')) 
+ from hr.employees;
+ substr-->concat-->upper
+ nested function
+---------------------------------
+-General functions:
+=select last_name,nvl(commission_pct,0) from hr.employees;
+ replace evrey null value with 0
+=select last_name,salary*12+nvl(commission_pct,1) from hr.employees;
+ show annual salary + commission pct 
+=select last_name,nvl2(commission_pct,1,0) from hr.employees;
+ if commission_pct=null show 0
+ else show 1
+ 0 and 1 can be any char ,word ,or number
+=select first_name,last_name,
+ nullif(length(first_name),length(last_name)) 
+ from HR.EMPLOYEES;
+ if length of first_name = length of last_name show null
+ else show max between 2 lengths
+-coalesce-->show first not null value
+=select COALESCE(null,null,5,3,null,9) from dual;\\5
+=select last_name,salary ,
+ case job_id
+ when 'IT_PROG'  then salary*2
+ when 'ST_CLERK' then salary*3
+ when 'SA_REP'   then salary*4
+ else salary end
+ "Revised salary"//give name to the resulted column
+ from hr.employees;
+ like switch statement in c+
+=select last_name,salary ,
+ decode (job_id,'IT_PROG', salary*2,'ST_CLERK', salary*3,'SA_REP',salary*4,salary)
+ "Revised salary"
+ from hr.employees;
+ decode(col,case1,return1,case2,return2,...,default)
+
+
+ 
+
+
+
+
+
+
+
+
+ 
+
+
+
+  
